@@ -13,7 +13,8 @@ void insertion_sort_list(listint_t **list)
 	for (current = (*list)->next; current != NULL; current = current->next)
 	{
 		previous = current->prev;
-		for (; previous != NULL && current->n < previous->n; previous = previous->prev)
+		for (; previous != NULL && current->n < previous->n;
+				previous = previous->prev)
 		{
 			previous->next = current->next;
 			if (current->next != NULL)
