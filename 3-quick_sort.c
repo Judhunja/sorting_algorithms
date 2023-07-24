@@ -12,6 +12,9 @@ int lomuto_sort(int *array, size_t size, int lower, int upper)
 {
 	int pivot, start, temp_1, temp_2, i;
 
+	if (array == NULL)
+		return (1);
+
 	pivot = array[upper];
 	start = upper;
 
@@ -48,7 +51,7 @@ void quick_sort_imp(int *array, size_t size, int lower, int upper)
 {
 	int div;
 
-	if (lower >= upper)
+	if (lower < 0 || lower >= upper || array == NULL)
 		return;
 
 	div = lomuto_sort(array, size,  lower, upper);
