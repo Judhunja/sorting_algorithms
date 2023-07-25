@@ -1,5 +1,19 @@
 #include "sort.h"
 /**
+ * swap - swaps two ints
+ * @x: first int
+ * @y: second int
+ * Return: nothing
+ */
+void swap(int *x, int *y)
+{
+	int temp;
+
+	temp = *x;
+	*x = *y;
+	*y = temp;
+}
+/**
  * lomuto_sort - implements the divide and conquer technique
  * of quick sort algorithm
  * @array: array of ints
@@ -10,33 +24,29 @@
  */
 int lomuto_sort(int *array, size_t size, int lower, int upper)
 {
-	int pivot, start, temp_1, temp_2, i;
+	int pivot, i, j;
 
-	if (array == NULL)
+	if (array == NULL || size == 0)
 		return (1);
 
 	pivot = array[upper];
-	start = upper;
+	j = upper;
+	i = lower;
 
-	for (i = upper; i >= lower; i--)
+	while (i < j)
 	{
-		if (array[i] > pivot)
+		while (array[i] <= pivot)
+			i++;
+		while (array[j] > pivot)
+			j--;
+		if (i < j)
 		{
-			start--;
-			temp_1 = array[start];
-			array[start] = array[i];
-			array[i] = temp_1;
+			swap(&array[i], &array[j]);
 		}
 	}
-	if (upper != start)
-	{
-		temp_2 = array[start];
-		array[start] = array[upper];
-		array[upper] = temp_2;
-	}
+	swap(&array[j], &array[upper]);
 	print_array(array, size);
-
-	return (start);
+	return (j);
 }
 
 /**
@@ -51,12 +61,12 @@ void quick_sort_imp(int *array, size_t size, int lower, int upper)
 {
 	int div;
 
-	if (lower < 0 || lower >= upper || array == NULL)
-		return;
-
-	div = lomuto_sort(array, size,  lower, upper);
-	quick_sort_imp(array, size, lower, div - 1);
-	quick_sort_imp(array, size, div + 1, upper);
+	if (lower < upper)
+	{
+		div = lomuto_sort(array, size, lower, upper);
+		quick_sort_imp(array, size, lower, div - 1);
+		quick_sort_imp(array, size, div + 1, upper);
+	}
 }
 
 /**
