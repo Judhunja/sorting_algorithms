@@ -30,23 +30,19 @@ int lomuto_sort(int *array, size_t size, int lower, int upper)
 		return (1);
 
 	pivot = array[upper];
-	j = upper;
-	i = lower;
+	i = lower - 1;
 
-	while (i < j)
+	for (j = lower; j < upper; j++)
 	{
-		while (array[i] <= pivot)
-			i++;
-		while (array[j] > pivot)
-			j--;
-		if (i < j)
+		if (array[j] <= pivot)
 		{
-			swap(&array[i], &array[j]);
+			i++;
+			swap(&array[j], &array[i]);
 		}
 	}
-	swap(&array[j], &array[upper]);
+	swap(&array[i + 1], &array[upper]);
 	print_array(array, size);
-	return (j);
+	return (i + 1);
 }
 
 /**
