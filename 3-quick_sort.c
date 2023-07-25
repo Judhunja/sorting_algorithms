@@ -26,9 +26,6 @@ int lomuto_sort(int *array, size_t size, int lower, int upper)
 {
 	int pivot, i, j;
 
-	if (array == NULL || size == 0)
-		return (1);
-
 	pivot = array[upper];
 	i = lower - 1;
 
@@ -37,11 +34,18 @@ int lomuto_sort(int *array, size_t size, int lower, int upper)
 		if (array[j] <= pivot)
 		{
 			i++;
-			swap(&array[j], &array[i]);
+			if (i < j)
+			{
+				swap(&array[j], &array[i]);
+				print_array(array, size);
+			}
 		}
 	}
-	swap(&array[i + 1], &array[upper]);
-	print_array(array, size);
+	if (array[i + 1] > pivot)
+	{
+		swap(&array[i + 1], &array[upper]);
+		print_array(array, size);
+	}
 	return (i + 1);
 }
 
